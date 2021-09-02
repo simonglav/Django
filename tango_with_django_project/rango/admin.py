@@ -7,6 +7,7 @@ class PageAdmin(admin.ModelAdmin):
 
 
 class CatAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name', )}
     list_display = ('name', 'views', 'likes')
 
 
