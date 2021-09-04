@@ -1,11 +1,12 @@
 {% extends 'rango/base.html' %}
 {% load static %}
 {% block title_block %}
-    Add a Category
+    Add a Page to {{ category.name }}
 {% endblock %}
 
 {% block body_block %}
-    <form id="category_form" method="post" action="{% url 'add_category' %}">
+    <form id="add_page_form" method="post" action="/rango/category/{{ category.slug }}/add_page/">
+
         {% csrf_token %}
         {% for hidden in form.hidden_fields %}
             {{ hidden }}
@@ -15,6 +16,6 @@
             {{ field.help_text }}
             {{ field }}
         {% endfor %}
-        <input type="submit" name="submit" value="Create Category" />
+        <input type="submit" name="submit" value="Add Page" />
     </form>
 {% endblock %}
