@@ -6,17 +6,23 @@
 
 {% block body_block %}
     {% if category %}
-        <h1>{{ category.name }}</h1>
+        <div class="jumbotron p-4">
+            <div class="container">
+                <h1 class="jumbotron-heading">{{ category.name }}</h1>
+            </div>
+        </div>
         {% if pages %}
-            <ul>
+            <ul class="list-group">
             {% for page in pages %}
-                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                <li class="list-group-item">
+                    <a href="{{ page.url }}">{{ page.title }}</a>
+                </li>
             {% endfor %}
             </ul>
         {% else %}
             <strong>No pages currently in category.</strong>
         {% endif %}
-    <a href="{% url 'add_page' category.slug %}">Add a Page</a>
+        <a href="{% url 'add_page' category.slug %}">Add a Page</a>
     {% else %}
         The specified category does not exist!
     {% endif %}
