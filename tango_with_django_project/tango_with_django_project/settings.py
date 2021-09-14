@@ -25,6 +25,7 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'media/')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-9bn+jj%3n+w-*y4oy#nygv3ddl$%rr9*-a^or1*8zo+-2d7@nj'
+GOOGLE_RECAPTCHA_SECRET_KEY = '6Lfj42YcAAAAAE5B5bR-I_6QzwKjAyldhc3lxHDe'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

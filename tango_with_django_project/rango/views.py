@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm
+from .decorators import check_recaptcha
 
 
 def base(request):
@@ -61,6 +62,7 @@ def add_category(request):
     return render(request, 'rango/add_category.html', {"form": form})
 
 
+@check_recaptcha
 def add_page(request, category_name_slug):
     try:
         category = Category.objects.get(slug=category_name_slug)
@@ -70,7 +72,7 @@ def add_page(request, category_name_slug):
     form = PageForm()
     if request.method == 'POST':
         form = PageForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and request.recaptcha_is_valid:
             if category:
                 page = form.save(commit=False)
                 page.category = category

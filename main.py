@@ -1,16 +1,22 @@
-# This is a sample Python script.
+class Solution:
+    def maxNumberOfBalloons(self, text: str) -> int:
+        counter = {x: 0 for x in 'balon'}
+        for ch in text:
+            if ch == 'b':
+                counter['b'] += 1
+            elif ch == 'a':
+                counter['a'] += 1
+            elif ch == 'l':
+                counter['l'] += 0.5
+            elif ch == 'o':
+                counter['o'] += 0.5
+            elif ch == 'n':
+                counter['n'] += 1
+        return int(min(counter.values()))
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    sol = Solution()
+    print(sol.maxNumberOfBalloons("nlaebolko"))
+    print(sol.maxNumberOfBalloons("loonbalxballpoon"))
+    print(sol.maxNumberOfBalloons("leetcode"))
