@@ -27,6 +27,11 @@
                                             <a href="{% url 'show_category' category.slug %}">
                                                 {{ category.name }}
                                             </a>
+                                            {% if category.likes > 1 %}
+                                            ({{ category.likes }} likes)
+                                        {% elif category.likes == 1 %}
+                                            ({{ category.likes }} like)
+                                        {% endif %}
                                         </li>
                                     {% endfor %}
                                 </ul>
