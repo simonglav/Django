@@ -8,6 +8,9 @@ from .decorators import check_recaptcha
 
 
 def base(request):
+    """
+    Count visits to all pages
+    """
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
     return render(request, 'rango/base.html', context=context_dict)
@@ -29,6 +32,9 @@ def index(request):
 
 
 def about(request):
+    """
+    Create a context dictionary with message and visits counter
+    """
     context_dict = {
         'boldmessage': "This tutorial has been put together by Simon."}
     visitor_cookie_handler(request)
@@ -37,6 +43,9 @@ def about(request):
 
 
 def show_category(request, category_name_slug):
+    """
+    Create a context dictionary with categories and pages(sorted by views)
+    """
     context_dict = {}
 
     try:
@@ -52,6 +61,10 @@ def show_category(request, category_name_slug):
 
 
 def add_category(request):
+    """
+    Add category to DB via CategoryForm() and check validity of entered data
+    before saving in DB
+    """
     form = CategoryForm()
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -65,6 +78,10 @@ def add_category(request):
 
 @check_recaptcha
 def add_page(request, category_name_slug):
+    """
+    Add page to particular category(category_name_slug) via PageForm()
+    Check validity of entered data and provide Google reCaptcha checking
+    """
     try:
         category = Category.objects.get(slug=category_name_slug)
     except Category.DoesNotExist:
@@ -88,6 +105,9 @@ def add_page(request, category_name_slug):
 
 
 def get_server_side_cookie(request, cookie, default_val=None):
+    """
+    Store cookies on the server via session
+    """
     val = request.session.get(cookie)
     if not val:
         val = default_val
@@ -95,13 +115,18 @@ def get_server_side_cookie(request, cookie, default_val=None):
 
 
 def visitor_cookie_handler(request):
+    """
+    Get the number of visits of the site.
+    If the cookie exists -> the value returned is casted to an integer
+    If not -> the default value of 1 is used
+    """
     visits = int(get_server_side_cookie(request, 'visits', '1'))
     last_visit_cookie = get_server_side_cookie(request,
                                                'last_visit',
                                                str(datetime.now()))
     last_visit_time = datetime.strptime(last_visit_cookie[:-7],
                                         '%Y-%m-%d %H:%M:%S')
-
+    # If it's more than a second since the last visit...
     if (datetime.now() - last_visit_time).seconds > 0:
         visits = visits + 1
         request.session['last_visit'] = str(datetime.now())
@@ -112,6 +137,11 @@ def visitor_cookie_handler(request):
 
 
 def goto_url(request):
+    """
+    Take a parametrised HTTP GET request(i.e rango/goto/?page_id=1)
+    and update the number of views for the page
+    Redirect to the actual URL
+    """
     page_id = None
     url = '/rango/'
     if request.method == 'GET':
@@ -130,6 +160,11 @@ def goto_url(request):
 
 @login_required
 def like_category(request):
+    """
+    Examine the request and pick out the category_id and then
+    increment the number of likes for that category
+    Only for authenticated users
+    """
     cat_id = None
     if request.method == 'GET':
         cat_id = request.GET['category_id']
