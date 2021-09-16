@@ -71,8 +71,6 @@ def add_category(request):
         if form.is_valid():
             form.save(commit=True)
             return index(request)
-        else:
-            print(form.errors)
     return render(request, 'rango/add_category.html', {"form": form})
 
 
