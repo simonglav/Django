@@ -1,5 +1,5 @@
-# Django
-It's a web-collection that provides features like: creating categories for registred users; adding pages to categories for all visitors.
+# url-library
+It's a links library that provides features like: creating categories for registred users; adding pages(links) to categories for all visitors.
 Categories have the 'Like' feature available for registred users. Counting the number of page views was implemented.
 
 
